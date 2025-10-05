@@ -1,4 +1,6 @@
-﻿using Assets._CrossyroadTest.Scripts.TwoBosses.Entities.Bosses;
+using Assets._CrossyroadTest.Scripts.Games.TwoBosses.Entities.Bosses;
+using Assets._CrossyroadTest.Scripts.Games.TwoBosses.Entities.Bosses.Model;
+using Assets._CrossyroadTest.Scripts.View.Common.ObjectPool;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
@@ -8,14 +10,8 @@ using UnityEngine;
 
 namespace Assets._CrossyroadTest.Scripts.View.TwoBosses.Boss
 {
-    internal class SecondBossView : BossView<SecondBoss, ISecondBossData>
+    public class SecondBossView : BossBehaviorView<BossId>
     {
-        [SerializeField] private GameObject _obstacle;
-        [SerializeField] private GameObject _button;
-        [SerializeField] private GameObject _wall;
-        [SerializeField] private MeshRenderer _meshRenderer;
-        [SerializeField] private Color _color;
-        [SerializeField] private Color _defaultColor;
         [SerializeField] private float _obstaclePositionYForCreate = 0f;
         [SerializeField] private float _obstaclePositionYForPrewAttack = 0f;
         [SerializeField] private float _obstaclePositionYForAttack = 0f;
@@ -23,39 +19,56 @@ namespace Assets._CrossyroadTest.Scripts.View.TwoBosses.Boss
         private GameObject _secondObstacle;
         private GameObject _wallObstacle;
         private GameObject _damageButton;
-        private MaterialPropertyBlock _materialPropertyBlock;
-        private MaterialPropertyBlock _defaultPropertyBlock;
-        private Vector3 _levelStartPoint;
-        protected override void Init()
+
+        protected override BossId Id => BossId.BlueBoss;
+
+        protected override void Init() { }
+
+        protected override async UniTask CreateDamageButton(BossBehaviorBase<BossId>.CreateDamageButtonCommand command, CancellationToken token)
         {
-            _levelStartPoint = transform.position - new Vector3(_bossData.BossPosition.x, 0, _bossData.BossPosition.y);
-            if (_damageButton == null)
+            _damageButton = _worldObjectService.GetGameObject(_assetsSettings.SecondBossButton, _worldObjectService.CurrentWorld.ZeroPosition + new Vector3(command.PositionForButton.x, _obstaclePositionYForCreate, command.PositionForButton.y), Quaternion.identity);
+            LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForAttack, 0.5f)
+               .BindToPositionY(_damageButton.transform);
+            await UniTask.WaitForSeconds(5f, cancellationToken: token).SuppressCancellationThrow();
+            LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForCreate, 0.5f)
+               .BindToPositionY(_damageButton.transform);
+            _worldObjectService.ReturnGameObject(_assetsSettings.SecondBossButton, _damageButton);
+            _damageButton = null;
+        }
+
+        protected override async UniTask CreatingObstacle(BossBehaviorBase<BossId>.CreatingObstacleCommand command, CancellationToken token)
+        {
+            var firstCell = command.CellsForObstacle.First();
+            var secondCell = command.CellsForObstacle.Last();
+            _firstObstacle = _worldObjectService.GetGameObject(_assetsSettings.SecondBossObstacle, _worldObjectService.CurrentWorld.ZeroPosition + new Vector3(firstCell.x, _obstaclePositionYForCreate, firstCell.y), Quaternion.identity);
+            _secondObstacle = _worldObjectService.GetGameObject(_assetsSettings.SecondBossObstacle, _worldObjectService.CurrentWorld.ZeroPosition + new Vector3(secondCell.x, _obstaclePositionYForCreate, secondCell.y), Quaternion.identity);
+            _wallObstacle = _worldObjectService.GetGameObject(_assetsSettings.SecondBossWall, _firstObstacle.transform.position, Quaternion.LookRotation(_secondObstacle.transform.position - _firstObstacle.transform.position));
+            _wallObstacle.transform.localScale = new Vector3(1, 1, Vector3.Distance(_firstObstacle.transform.position, _secondObstacle.transform.position));
+            MoveObstacleByY(_obstaclePositionYForPrewAttack, 0.2f);
+            await UniTask.WaitForSeconds(2);
+            MoveObstacleByY(_obstaclePositionYForAttack, 0.5f);
+            await UniTask.WaitForSeconds(2, cancellationToken: token).SuppressCancellationThrow();
+            MoveObstacleByY(_obstaclePositionYForCreate, 2f);
+            await UniTask.WaitForSeconds(2);
+            _worldObjectService.ReturnGameObject(_assetsSettings.SecondBossObstacle, _firstObstacle);
+            _worldObjectService.ReturnGameObject(_assetsSettings.SecondBossObstacle, _secondObstacle);
+            _worldObjectService.ReturnGameObject(_assetsSettings.SecondBossObstacle, _wallObstacle);
+            _firstObstacle = null;
+            _secondObstacle = null;
+            _wallObstacle = null;
+
+            void MoveObstacleByY(float y, float duration)
             {
-                _defaultPropertyBlock = new MaterialPropertyBlock();
-                _defaultPropertyBlock.SetColor("_BaseColor", _defaultColor);
-                _meshRenderer.SetPropertyBlock(_defaultPropertyBlock);
-                _materialPropertyBlock = new MaterialPropertyBlock();
-                _materialPropertyBlock.SetColor("_BaseColor", _color);
-                _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
-                _damageButton = Instantiate(_button, _levelStartPoint + new Vector3(0, _obstaclePositionYForCreate, 0), Quaternion.identity);
-                _damageButton.transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_defaultPropertyBlock);
-                _damageButton.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_materialPropertyBlock);
-                _damageButton.SetActive(false);
-                _firstObstacle = Instantiate(_obstacle, _levelStartPoint + new Vector3(0, _obstaclePositionYForCreate, 0), Quaternion.identity);
-                _firstObstacle.transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_defaultPropertyBlock);
-                _firstObstacle.transform.GetChild(1).GetComponent<MeshRenderer>().SetPropertyBlock(_materialPropertyBlock);
-                _firstObstacle.SetActive(false);
-                _secondObstacle = Instantiate(_obstacle, _levelStartPoint + new Vector3(0, _obstaclePositionYForCreate, 0), Quaternion.identity);
-                _secondObstacle.transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_defaultPropertyBlock);
-                _secondObstacle.transform.GetChild(1).GetComponent<MeshRenderer>().SetPropertyBlock(_materialPropertyBlock);
-                _secondObstacle.SetActive(false);
-                _wallObstacle = Instantiate(_wall, _levelStartPoint + new Vector3(0, _obstaclePositionYForCreate, 0), Quaternion.identity);
-                _wallObstacle.transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_materialPropertyBlock);
-                _wallObstacle.SetActive(false);
+                LMotion.Create(_firstObstacle.transform.position.y, y, duration)
+                    .BindToPositionY(_firstObstacle.transform);
+                LMotion.Create(_secondObstacle.transform.position.y, y, duration)
+                    .BindToPositionY(_secondObstacle.transform);
+                LMotion.Create(_wallObstacle.transform.position.y, y, duration)
+                    .BindToPositionY(_wallObstacle.transform);
             }
         }
 
-        protected override async UniTask SetState(BossBase<SecondBoss>.SetStateCommand<SecondBoss> command, CancellationToken token)
+        protected override async UniTask SetState(BossBehaviorBase<BossId>.SetStateCommand command, CancellationToken token)
         {
             switch (command.State)
             {
@@ -75,47 +88,20 @@ namespace Assets._CrossyroadTest.Scripts.View.TwoBosses.Boss
             }
         }
 
-        protected override async UniTask CreateDamageButton(BossBase<SecondBoss>.CreateDamageButtonCommand<SecondBoss> command, CancellationToken token)
+        protected override void Dispose()
         {
-            _damageButton.SetActive(true);
-            _damageButton.transform.position = _levelStartPoint + new Vector3(command.CellForButton.Position.x, _obstaclePositionYForCreate, command.CellForButton.Position.y);
-            LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForAttack, 0.5f)
-               .BindToPositionY(_damageButton.transform);
-            await UniTask.WaitForSeconds(5f, cancellationToken: token).SuppressCancellationThrow();
-            LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForCreate, 0.5f)
-               .BindToPositionY(_damageButton.transform);
+            ReturnGameObject(_assetsSettings.SecondBossButton, ref _damageButton);
+            ReturnGameObject(_assetsSettings.SecondBossObstacle, ref _firstObstacle);
+            ReturnGameObject(_assetsSettings.SecondBossObstacle, ref _secondObstacle);
+            ReturnGameObject(_assetsSettings.SecondBossWall, ref _wallObstacle);
         }
 
-        protected override async UniTask CreatingObstacle(BossBase<SecondBoss>.CreatingObstacleCommand<SecondBoss> command, CancellationToken token)
+        private void ReturnGameObject(UniGameObjectPoolBase uniGameObjectPoolBase, ref GameObject gameObject)
         {
-            var firstCell = command.CellsForObstacle.First();
-            var secondCell = command.CellsForObstacle.Last();
-            _firstObstacle.SetActive(true);
-            _secondObstacle.SetActive(true);
-            _wallObstacle.SetActive(true);
-            _firstObstacle.transform.position = _levelStartPoint + new Vector3(firstCell.Position.x, _obstaclePositionYForCreate, firstCell.Position.y);
-            _secondObstacle.transform.position = _levelStartPoint + new Vector3(secondCell.Position.x, _obstaclePositionYForCreate, secondCell.Position.y);
-            _wallObstacle.transform.position = _firstObstacle.transform.position;
-            _wallObstacle.transform.forward = _secondObstacle.transform.position - _firstObstacle.transform.position;
-            _wallObstacle.transform.localScale = new Vector3(1, 1, Vector3.Distance(_firstObstacle.transform.position, _secondObstacle.transform.position));
-            MoveObstacleByY(_obstaclePositionYForPrewAttack, 0.2f);
-            await UniTask.WaitForSeconds(2);
-            MoveObstacleByY(_obstaclePositionYForAttack, 0.5f);
-            await UniTask.WaitForSeconds(2, cancellationToken: token).SuppressCancellationThrow();
-            MoveObstacleByY(_obstaclePositionYForCreate, 2f);
-            await UniTask.WaitForSeconds(2);
-            _firstObstacle.SetActive(false);
-            _secondObstacle.SetActive(false);
-            _wallObstacle.SetActive(false);
-
-            void MoveObstacleByY(float y, float duration)
+            if (gameObject != null)
             {
-                LMotion.Create(_firstObstacle.transform.position.y, y, duration)
-                    .BindToPositionY(_firstObstacle.transform);
-                LMotion.Create(_secondObstacle.transform.position.y, y, duration)
-                    .BindToPositionY(_secondObstacle.transform);
-                LMotion.Create(_wallObstacle.transform.position.y, y, duration)
-                    .BindToPositionY(_wallObstacle.transform);
+                _worldObjectService.ReturnGameObject(uniGameObjectPoolBase, gameObject);
+                gameObject = null;
             }
         }
     }

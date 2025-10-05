@@ -50,8 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.ThreeRoads.Player.PlayerView
   capsuleCollider: {fileID: 8770839536313489259}
-  _color: {r: 0.101960786, g: 0.39607844, b: 0.7921569, a: 1}
-  _meshRenderer: {fileID: 5319431668321149993}
 --- !u!136 &8770839536313489259
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -126,9 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a387e5d04263ec54b8d01063627a34ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.BattleWithTwoBosses.Player.PlayerView
-  capsuleCollider: {fileID: 8770839536313489259}
-  _color: {r: 0.101960786, g: 0.39607844, b: 0.7921569, a: 1}
-  _meshRenderer: {fileID: 5319431668321149993}
+  _capsuleCollider: {fileID: 8770839536313489259}
 --- !u!1 &5511665866455467332
 GameObject:
   m_ObjectHideFlags: 0

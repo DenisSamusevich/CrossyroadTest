@@ -54,7 +54,7 @@ using UnityEngine.InputSystem.Utilities;
 ///         m_Player.Disable();                               // Disable all actions within map.
 ///     }
 ///
-///     #region Interface implementation of MyActions.IPlayerActions
+///     #region Interfaces implementation of MyActions.IPlayerActions
 ///
 ///     // Invoked when "Move" action is either started, performed or canceled.
 ///     public void OnMove(InputAction.CallbackContext context)
@@ -115,7 +115,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a8f43be0-4594-4d4e-bae2-7a38d9a74808"",
-                    ""path"": ""<Touchscreen>/position"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse;Touch"",
@@ -126,10 +126,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bfb5cbcc-aa3d-48f4-9059-073d78c79c0c"",
-                    ""path"": ""<Touchscreen>/Press"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
+                    ""groups"": "";Touch;Keyboard&Mouse"",
                     ""action"": ""Tap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1847,7 +1847,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         }
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Touch" which allows adding and removing callbacks.
+    /// Interfaces to implement callback methods for all input action callbacks associated with input actions defined by "Touch" which allows adding and removing callbacks.
     /// </summary>
     /// <seealso cref="TouchActions.AddCallbacks(ITouchActions)" />
     /// <seealso cref="TouchActions.RemoveCallbacks(ITouchActions)" />
@@ -1869,7 +1869,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnTap(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+    /// Interfaces to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
     /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
     /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
@@ -1940,7 +1940,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
+    /// Interfaces to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
     /// </summary>
     /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
     /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />

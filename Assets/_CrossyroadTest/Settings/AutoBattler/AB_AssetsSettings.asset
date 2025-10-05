@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6161c72be1c584a94db938c4c22e72, type: 3}
+  m_Name: AB_AssetsSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.AutoBattler.Settings.AB_AssetsSettings
+  _levelElementColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  _levelElement:
+    _componentPool:
+      m_Original: {fileID: 3354760356880211662, guid: 7e9c071a77548924cb2161a1965de002, type: 3}
+      m_Capacity: 20
+  _playerColor: {r: 1, g: 1, b: 1, a: 1}
+  _playerBehavior:
+    _componentPool:
+      m_Original: {fileID: 7449109197006727147, guid: 3ede96b200aa8fc46805891721f93da0, type: 3}
+      m_Capacity: 2
+  _enemyBehavior:
+    _componentPool:
+      m_Original: {fileID: 4335875342201221465, guid: 8e41f0a00af2ce44a8516b464e808b86, type: 3}
+      m_Capacity: 10

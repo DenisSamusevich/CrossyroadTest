@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a71fbb5e754f6e4dbb602c5284e644c, type: 3}
+  m_Name: AB_LevelSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.AutoBattler.Settings.AB_LevelSettings
+  <IsDestroyAfterGame>k__BackingField: 0
+  <IsUsedRepeatedly>k__BackingField: 1
+  <CountEnemy>k__BackingField: 5
+  _enemyList:
+  - <EnemyType>k__BackingField: 1
+    <EnemyColor>k__BackingField: {r: 0.13484512, g: 0.6679245, b: 0.23124963, a: 1}
+    <Name>k__BackingField: Goblin
+    <Health>k__BackingField: 5
+    <BaseDamage>k__BackingField: 2
+    <Strength>k__BackingField: 1
+    <Dexterity>k__BackingField: 1
+    <Endurance>k__BackingField: 1
+    <Ability>k__BackingField: 0
+    <Reward>k__BackingField: 1
+  - <EnemyType>k__BackingField: 2
+    <EnemyColor>k__BackingField: {r: 0.7207546, g: 0.7207546, b: 0.7207546, a: 1}
+    <Name>k__BackingField: Sceleton
+    <Health>k__BackingField: 10
+    <BaseDamage>k__BackingField: 2
+    <Strength>k__BackingField: 2
+    <Dexterity>k__BackingField: 2
+    <Endurance>k__BackingField: 1
+    <Ability>k__BackingField: 1
+    <Reward>k__BackingField: 2
+  - <EnemyType>k__BackingField: 3
+    <EnemyColor>k__BackingField: {r: 0.5943396, g: 0.7598206, b: 1, a: 1}
+    <Name>k__BackingField: Slime
+    <Health>k__BackingField: 8
+    <BaseDamage>k__BackingField: 1
+    <Strength>k__BackingField: 3
+    <Dexterity>k__BackingField: 1
+    <Endurance>k__BackingField: 2
+    <Ability>k__BackingField: 2
+    <Reward>k__BackingField: 3
+  - <EnemyType>k__BackingField: 4
+    <EnemyColor>k__BackingField: {r: 0.94716984, g: 0.29129934, b: 0.92169785, a: 1}
+    <Name>k__BackingField: Ghost
+    <Health>k__BackingField: 6
+    <BaseDamage>k__BackingField: 3
+    <Strength>k__BackingField: 3
+    <Dexterity>k__BackingField: 2
+    <Endurance>k__BackingField: 1
+    <Ability>k__BackingField: 4
+    <Reward>k__BackingField: 4
+  - <EnemyType>k__BackingField: 5
+    <EnemyColor>k__BackingField: {r: 0.94716984, g: 0.29129934, b: 0.92169785, a: 1}
+    <Name>k__BackingField: Golem
+    <Health>k__BackingField: 10
+    <BaseDamage>k__BackingField: 1
+    <Strength>k__BackingField: 3
+    <Dexterity>k__BackingField: 1
+    <Endurance>k__BackingField: 3
+    <Ability>k__BackingField: 10
+    <Reward>k__BackingField: 5
+  - <EnemyType>k__BackingField: 6
+    <EnemyColor>k__BackingField: {r: 1, g: 0.017255656, b: 0, a: 1}
+    <Name>k__BackingField: Dragon
+    <Health>k__BackingField: 20
+    <BaseDamage>k__BackingField: 4
+    <Strength>k__BackingField: 3
+    <Dexterity>k__BackingField: 3
+    <Endurance>k__BackingField: 3
+    <Ability>k__BackingField: 3
+    <Reward>k__BackingField: 6
+  _classList:
+  - <CharacterColor>k__BackingField: {r: 0.017763138, g: 1, b: 0, a: 1}
+    <CharacterClass>k__BackingField: 1
+    <BonusHealthOfLevel>k__BackingField: 4
+    <StartWeapon>k__BackingField: 1
+    _levelBonus: 000000000700000002000000
+  - <CharacterColor>k__BackingField: {r: 1, g: 0.70595765, b: 0, a: 1}
+    <CharacterClass>k__BackingField: 2
+    <BonusHealthOfLevel>k__BackingField: 5
+    <StartWeapon>k__BackingField: 4
+    _levelBonus: 010000000400000006000000
+  - <CharacterColor>k__BackingField: {r: 1, g: 0, b: 0.35297775, a: 1}
+    <CharacterClass>k__BackingField: 3
+    <BonusHealthOfLevel>k__BackingField: 6
+    <StartWeapon>k__BackingField: 2
+    _levelBonus: 030000000500000008000000
+  _weapomList:
+  - <Weapon>k__BackingField: 4
+    <DamageType>k__BackingField: 3
+    <Damage>k__BackingField: 3
+  - <Weapon>k__BackingField: 2
+    <DamageType>k__BackingField: 1
+    <Damage>k__BackingField: 3
+  - <Weapon>k__BackingField: 1
+    <DamageType>k__BackingField: 2
+    <Damage>k__BackingField: 2
+  - <Weapon>k__BackingField: 5
+    <DamageType>k__BackingField: 3
+    <Damage>k__BackingField: 4
+  - <Weapon>k__BackingField: 3
+    <DamageType>k__BackingField: 2
+    <Damage>k__BackingField: 3
+  - <Weapon>k__BackingField: 6
+    <DamageType>k__BackingField: 3
+    <Damage>k__BackingField: 10

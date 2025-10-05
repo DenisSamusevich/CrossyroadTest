@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a843fa590f4631c4aacfbd707638b1cc, type: 3}
+  m_Name: TR_AssetsSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.ThreeRoads.Settings.TR_AssetsSettings
+  _playerColor: {r: 0.14509805, g: 0.3372549, b: 0.8666667, a: 1}
+  _playerBehavior:
+    _componentPool:
+      m_Original: {fileID: 5921561918145080178, guid: 3fea78537c3830048bfe4aae4c6219b2, type: 3}
+      m_Capacity: 1
+  _obstacleColor: {r: 1, g: 0, b: 0.1963191, a: 1}
+  _obstacle:
+    _gameObjectPool:
+      m_Original: {fileID: 8668636722918126798, guid: 437003e0a3ce8f64ab93869745067046, type: 3}
+      m_Capacity: 60
+  _triggerCollider:
+    _componentPool:
+      m_Original: {fileID: 5959805396514938105, guid: 0f4d8e3ec8532d64286e967f0e34d59c, type: 3}
+      m_Capacity: 2
+  _finalAreaColor: {r: 1, g: 0, b: 0.70213413, a: 1}
+  _finalAreaElement:
+    _componentPool:
+      m_Original: {fileID: 7078877802008137058, guid: 83e17498b39b5dc4fb9590226d8b93cb, type: 3}
+      m_Capacity: 20
+  _freeAreaColor: {r: 0.4193576, g: 1, b: 0.2688679, a: 1}
+  _freeAreaElement:
+    _componentPool:
+      m_Original: {fileID: 3137988586326974707, guid: 9d6f9554664edaf43bbfa1de6dae2def, type: 3}
+      m_Capacity: 60
+  _roadAreaColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+  _roadAreaElement:
+    _componentPool:
+      m_Original: {fileID: 754283714706901519, guid: 558716b4835c6704bbec999207683332, type: 3}
+      m_Capacity: 50
+  _startAreaColor: {r: 0.8679245, g: 0.8294038, b: 0.020469915, a: 1}
+  _startAreaElement:
+    _componentPool:
+      m_Original: {fileID: 3548426985993093691, guid: 907c2d2ff3aa1004cabd267318be6039, type: 3}
+      m_Capacity: 20

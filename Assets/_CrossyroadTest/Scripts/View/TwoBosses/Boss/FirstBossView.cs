@@ -1,4 +1,5 @@
-﻿using Assets._CrossyroadTest.Scripts.TwoBosses.Entities.Bosses;
+using Assets._CrossyroadTest.Scripts.Games.TwoBosses.Entities.Bosses;
+using Assets._CrossyroadTest.Scripts.Games.TwoBosses.Entities.Bosses.Model;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
@@ -8,43 +9,64 @@ using UnityEngine;
 
 namespace Assets._CrossyroadTest.Scripts.View.TwoBosses.Boss
 {
-    internal class FirstBossView : BossView<FirstBoss, IFirstBossData>
+    public class FirstBossView : BossBehaviorView<BossId>
     {
-        [SerializeField] private GameObject _obstacle;
-        [SerializeField] private GameObject _button;
-        [SerializeField] private MeshRenderer _meshRenderer;
-        [SerializeField] private Color _color;
-        [SerializeField] private Color _defaultColor;
         [SerializeField] private float _obstaclePositionYForCreate = 0f;
         [SerializeField] private float _obstaclePositionYForPrewAttack = 0f;
         [SerializeField] private float _obstaclePositionYForAttack = 0f;
-        private List<GameObject> _reserveObstacles = new List<GameObject>();
         private List<GameObject> _attackObstacles = new List<GameObject>();
         private GameObject _damageButton;
-        private Vector3 _levelStartPoint;
-        private MaterialPropertyBlock _materialPropertyBlock;
-        private MaterialPropertyBlock _defaultPropertyBlock;
+
+        protected override BossId Id => BossId.RedBoss;
 
         protected override void Init()
         {
-            _levelStartPoint = transform.position - new Vector3(_bossData.BossPosition.x, 0, _bossData.BossPosition.y);
-            if (_damageButton == null)
-            {
-                _defaultPropertyBlock = new MaterialPropertyBlock();
-                _defaultPropertyBlock.SetColor("_BaseColor", _defaultColor);
-                _meshRenderer.SetPropertyBlock(_defaultPropertyBlock);
-                _materialPropertyBlock = new MaterialPropertyBlock();
-                _materialPropertyBlock.SetColor("_BaseColor", _color);
-                _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
-                _damageButton = Instantiate(_button, _levelStartPoint + new Vector3(0, _obstaclePositionYForCreate, 0), Quaternion.identity);
-                _damageButton.transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_defaultPropertyBlock);
-                _damageButton.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_materialPropertyBlock);
-            }
-            _damageButton.SetActive(false);
-            LMotion.Create(transform.localScale, new Vector3(1, 1, 1), 1).BindToLocalScale(transform);
+            LMotion.Create(transform.localScale, Vector3.one, 1).BindToLocalScale(transform);
         }
 
-        protected override async UniTask SetState(BossBase<FirstBoss>.SetStateCommand<FirstBoss> command, CancellationToken token)
+        protected override async UniTask CreateDamageButton(BossBehaviorBase<BossId>.CreateDamageButtonCommand command, CancellationToken token)
+        {
+            _damageButton = _worldObjectService.GetGameObject(_assetsSettings.FirstBossButton, _worldObjectService.CurrentWorld.ZeroPosition + new Vector3(0, _obstaclePositionYForCreate, 0), Quaternion.identity);
+            _damageButton.transform.position = _worldObjectService.CurrentWorld.ZeroPosition + new Vector3(command.PositionForButton.x, _obstaclePositionYForCreate, command.PositionForButton.y);
+            await LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForAttack, 0.5f)
+               .BindToPositionY(_damageButton.transform);
+            await UniTask.WaitForSeconds(5f, cancellationToken: token).SuppressCancellationThrow();
+            await LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForCreate, 0.5f)
+               .BindToPositionY(_damageButton.transform);
+            _worldObjectService.ReturnGameObject(_assetsSettings.FirstBossButton, _damageButton);
+            _damageButton = null;
+        }
+
+        protected override async UniTask CreatingObstacle(BossBehaviorBase<BossId>.CreatingObstacleCommand command, CancellationToken token)
+        {
+            foreach (var position in command.CellsForObstacle)
+            {
+                var obctacle = _worldObjectService.GetGameObject(_assetsSettings.FirstBossObstacle, _worldObjectService.CurrentWorld.ZeroPosition + new Vector3(position.x, _obstaclePositionYForCreate, position.y), Quaternion.identity);
+                _attackObstacles.Add(obctacle);
+                await LMotion.Create(obctacle.transform.position.y, _obstaclePositionYForPrewAttack, 0.2f)
+                    .BindToPositionY(obctacle.transform);
+            }
+            await UniTask.WaitForSeconds(3);
+            foreach (var item in _attackObstacles)
+            {
+                LMotion.Create(item.transform.position.y, _obstaclePositionYForAttack, 0.5f)
+                    .BindToPositionY(item.transform);
+            }
+            await UniTask.WaitForSeconds(1, cancellationToken: token).SuppressCancellationThrow();
+            foreach (var item in _attackObstacles)
+            {
+                LMotion.Create(item.transform.position.y, _obstaclePositionYForCreate, 2)
+                    .BindToPositionY(item.transform);
+            }
+            await UniTask.WaitForSeconds(3);
+            foreach (var item in _attackObstacles)
+            {
+                _worldObjectService.ReturnGameObject(_assetsSettings.FirstBossObstacle, item);
+            }
+            _attackObstacles.Clear();
+        }
+
+        protected override async UniTask SetState(BossBehaviorBase<BossId>.SetStateCommand command, CancellationToken token)
         {
             switch (command.State)
             {
@@ -65,56 +87,16 @@ namespace Assets._CrossyroadTest.Scripts.View.TwoBosses.Boss
             }
         }
 
-        protected override async UniTask CreateDamageButton(BossBase<FirstBoss>.CreateDamageButtonCommand<FirstBoss> command, CancellationToken token)
+        protected override void Dispose()
         {
-            _damageButton.SetActive(true);
-            _damageButton.transform.position = _levelStartPoint + new Vector3(command.CellForButton.Position.x, _obstaclePositionYForCreate, command.CellForButton.Position.y);
-            await LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForAttack, 0.5f)
-               .BindToPositionY(_damageButton.transform);
-            await UniTask.WaitForSeconds(5f, cancellationToken: token).SuppressCancellationThrow();
-            await LMotion.Create(_damageButton.transform.position.y, _obstaclePositionYForCreate, 0.5f)
-               .BindToPositionY(_damageButton.transform);
-        }
-
-        protected override async UniTask CreatingObstacle(BossBase<FirstBoss>.CreatingObstacleCommand<FirstBoss> command, CancellationToken token)
-        {
-            foreach (var cell in command.CellsForObstacle)
+            if (_damageButton != null)
             {
-                GameObject obctacle;
-                if (_reserveObstacles.Count == 0)
-                {
-                    obctacle = Instantiate(_obstacle, _levelStartPoint + new Vector3(cell.Position.x, _obstaclePositionYForCreate, cell.Position.y), Quaternion.identity);
-                    obctacle.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(_materialPropertyBlock);
-
-                }
-                else
-                {
-                    obctacle = _reserveObstacles[^1];
-                    _reserveObstacles.RemoveAt(_reserveObstacles.Count - 1);
-                    obctacle.SetActive(true);
-                    obctacle.transform.position = _levelStartPoint + new Vector3(cell.Position.x, _obstaclePositionYForCreate, cell.Position.y);
-                }
-                _attackObstacles.Add(obctacle);
-                await LMotion.Create(obctacle.transform.position.y, _obstaclePositionYForPrewAttack, 0.2f)
-                    .BindToPositionY(obctacle.transform);
+                _worldObjectService.ReturnGameObject(_assetsSettings.FirstBossButton, _damageButton);
+                _damageButton = null;
             }
-            await UniTask.WaitForSeconds(3);
             foreach (var item in _attackObstacles)
             {
-                LMotion.Create(item.transform.position.y, _obstaclePositionYForAttack, 0.5f)
-                    .BindToPositionY(item.transform);
-            }
-            await UniTask.WaitForSeconds(1, cancellationToken: token).SuppressCancellationThrow();
-            foreach (var item in _attackObstacles)
-            {
-                LMotion.Create(item.transform.position.y, _obstaclePositionYForCreate, 2)
-                    .BindToPositionY(item.transform);
-            }
-            await UniTask.WaitForSeconds(3);
-            foreach (var item in _attackObstacles)
-            {
-                item.SetActive(false);
-                _reserveObstacles.Add(item);
+                _worldObjectService.ReturnGameObject(_assetsSettings.FirstBossObstacle, item);
             }
             _attackObstacles.Clear();
         }

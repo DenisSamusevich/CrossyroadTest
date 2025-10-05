@@ -25,6 +25,13 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.mackysoft.xpool": {
+      "version": "0.1.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.unity.adaptiveperformance": {
       "version": "5.1.5",
       "depth": 1,
@@ -291,16 +298,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.visualscripting": {
-      "version": "1.9.7",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
     },
     "jp.hadashikick.vcontainer": {
       "version": "1.17.0",

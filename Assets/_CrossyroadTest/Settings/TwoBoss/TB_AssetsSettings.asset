@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876151ae7c6dd7646b6981fcb9f17011, type: 3}
+  m_Name: TB_AssetsSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.TwoBosses.Settings.TB_AssetsSettings
+  _defaultColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+  _playerColor: {r: 0.14509805, g: 0.3372549, b: 0.8666667, a: 1}
+  _playerBehaviorPrefab:
+    _componentPool:
+      m_Original: {fileID: 1180466971604375605, guid: 3fea78537c3830048bfe4aae4c6219b2, type: 3}
+      m_Capacity: 2
+  _firstBossColor: {r: 0.9150943, g: 0, b: 0.09164723, a: 1}
+  _firstBossObstacle:
+    _gameObjectPool:
+      m_Original: {fileID: 667758704903800131, guid: b545991c6e75b654b8942f0ec88344d5, type: 3}
+      m_Capacity: 20
+  _firstBoss:
+    _componentPool:
+      m_Original: {fileID: 6959905893790182164, guid: 0f958f16e0f7bd846874cac46d8fa9bf, type: 3}
+      m_Capacity: 2
+  _firstBossButton:
+    _gameObjectPool:
+      m_Original: {fileID: 792092849777917004, guid: c6b2cf36406dfa3498167347fecbd6e5, type: 3}
+      m_Capacity: 2
+  _secondBossColor: {r: 0.49881196, g: 0.09064613, b: 0.9150943, a: 1}
+  _secondBoss:
+    _componentPool:
+      m_Original: {fileID: 8380298535888004536, guid: af6da5e9ebb97a846b64d145124ddeb8, type: 3}
+      m_Capacity: 2
+  _secondBossObstacle:
+    _gameObjectPool:
+      m_Original: {fileID: 1364244031435124372, guid: 3b0ca75f4c7b8334e9d55bece5b4c5be, type: 3}
+      m_Capacity: 4
+  _secondBossWall:
+    _gameObjectPool:
+      m_Original: {fileID: 4582993603135449853, guid: ceeaf9063c601fb409091d30f6ee5c76, type: 3}
+      m_Capacity: 2
+  _secondBossButton:
+    _gameObjectPool:
+      m_Original: {fileID: 5132114226659907068, guid: 41541356845ccae44ba7290ea60e95b0, type: 3}
+      m_Capacity: 2
+  _wallElementColor: {r: 0.16037738, g: 0.032529376, b: 0.032529376, a: 1}
+  _wallElement:
+    _componentPool:
+      m_Original: {fileID: 7078877802008137058, guid: 8b69d1c4054922a4ba7c81d1b208b0e0, type: 3}
+      m_Capacity: 60
+  _freeElementColor: {r: 0.3859454, g: 0.9245283, b: 0.3532396, a: 1}
+  _freeLevelElement:
+    _componentPool:
+      m_Original: {fileID: 7078877802008137058, guid: f05491b3bc410404eb8d9299da6aa192, type: 3}
+      m_Capacity: 150

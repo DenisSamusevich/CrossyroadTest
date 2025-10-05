@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfef8158e057eb2498b93539743b6c7f, type: 3}
+  m_Name: TB_LevelSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._CrossyroadTest.Scripts.View.TwoBosses.Settings.TB_LevelSettings
+  <IsDestroyAfterGame>k__BackingField: 0
+  <IsUsedRepeatedly>k__BackingField: 1
+  <LevelSize>k__BackingField: {x: 12, y: 11}
